@@ -62,7 +62,7 @@ dof1 <- dof %>%
 
 ## create groups and totals we need ----
 ### 1 year total and 3 and 5 year rolling averages by race/ethnicity
-dof_totals_year_race <- dof1 %>%
+dof_totals_race_year <- dof1 %>%
   group_by(year, race_cat, age_cat) %>%
   summarize(sum_1yr = sum(pop),
             .groups = "keep") %>%
@@ -74,12 +74,12 @@ dof_totals_year_race <- dof1 %>%
          roll_sum_3yr = rollsum(sum_1yr, 3, fill = NA, align = "right"),
          roll_sum_5yr = rollsum(sum_1yr, 5, fill = NA, align = "right")) %>%
   ungroup() %>%
-  pivot_longer(names_to = "value_type",
+  pivot_longer(names_to = "est_type",
                values_to = "population",
                cols = matches("sum")) %>%
-  mutate(year_start = case_when(value_type == "sum_1yr" ~ year, 
-                                value_type == "roll_sum_3yr" ~ year-2,
-                                value_type == "roll_sum_5yr" ~ year-4),
+  mutate(year_start = case_when(est_type == "sum_1yr" ~ year, 
+                                est_type == "roll_sum_3yr" ~ year-2,
+                                est_type == "roll_sum_5yr" ~ year-4),
          year_range = paste0(year_start, "-", year)) %>%
   select(-year_start) %>%
   filter(!is.na(population))
@@ -97,12 +97,12 @@ dof_totals_all_year <- dof1 %>%
          roll_sum_3yr = rollsum(sum_1yr, 3, fill = NA, align = "right"),
          roll_sum_5yr = rollsum(sum_1yr, 5, fill = NA, align = "right")) %>%
   ungroup() %>%
-  pivot_longer(names_to = "value_type",
+  pivot_longer(names_to = "est_type",
                values_to = "population",
                cols = matches("sum")) %>%
-  mutate(year_start = case_when(value_type == "sum_1yr" ~ year, 
-                                value_type == "roll_sum_3yr" ~ year-2,
-                                value_type == "roll_sum_5yr" ~ year-4),
+  mutate(year_start = case_when(est_type == "sum_1yr" ~ year, 
+                                est_type == "roll_sum_3yr" ~ year-2,
+                                est_type == "roll_sum_5yr" ~ year-4),
          year_range = paste0(year_start, "-", year),
          race_cat = "All SMC") %>%
   select(-year_start) %>%
@@ -114,7 +114,7 @@ dof_totals_all_year <- dof1 %>%
 date <- str_replace_all(Sys.Date(), "-", "")
 
 path_race_year <- paste0("dof-denoms//dof_denoms_race_saved_", date, ".Rda")
-save(dof_totals_year_race, 
+save(dof_totals_race_year, 
      file = path_race_year)
 
 path_all_year <- paste0("dof-denoms//dof_denoms_all_saved_", date, ".Rda")
