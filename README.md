@@ -14,8 +14,8 @@ This calculator uses these age groups: 0, 1-4, 5-9, 10-14, 15-19 ... 80-84, 85-8
 This script outputs a file with these variables
 
 **`year`**: the year of the estimate  
-**`year_range`**: the years included in the estimate, ex: 2010-2014 
-**`value_type`**: either `sum_1yr` (single year), `roll_sum_3yr` (right aligned 3 year sum) or `roll_sum_5yr` (right aligned 5 year sum)  
+**`year_range`**: the years included in the estimate, ex: 2010-2014  
+**`est_type`**: either `sum_1yr` (single year), `roll_sum_3yr` (right aligned 3 year sum) or `roll_sum_5yr` (right aligned 5 year sum)  
 **`age_cat`**: age category, ex: 0, 1-4, 5-9, etc.  
 **`race_cat`**: race/ethnicity group using method whether Latinx supercedes all other groups, then Multirace, the single race and other  
 **`population`**: the population estimate  
