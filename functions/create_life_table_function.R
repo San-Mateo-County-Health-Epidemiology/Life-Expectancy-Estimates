@@ -1,20 +1,8 @@
-# function to make life table -------------------------------
-## data prep: from your dataset, rename the columns you want to look at to "deaths" and "population"
-
-# function for accumulate in life table
-fun_alive_int <- function(out, input) {
-  if(!is.na(input)) {
-    input*out 
-  } else {
-    return(done())
-  }
-}
-
-
 # function to make life table ----
 ## row_number() == n() identifies the last row of a group and allows for different behavior for that row
 make_life_table <- function(data) {
   life_table <- data %>%
+    arrange(start_age) %>% 
     mutate(int_width = case_when(age_cat == "0" ~ 1,
                                  age_cat == "1-4" ~ 4,
                                  age_cat == "0-4" ~ 5, 
@@ -22,13 +10,14 @@ make_life_table <- function(data) {
                                  age_cat == "90+" ~ 12.3,
                                  TRUE ~ 5),
            fract_surv = case_when(age_cat == "0" ~ 0.1,
+                                  age_cat == "0-4" ~ 0.02,
                                   TRUE ~ 0.5),
            death_rate = deaths/population,
            prob_dying = int_width*death_rate/(1+int_width*(1-fract_surv)*death_rate),
            prob_surv = 1-prob_dying,
            num_alive_int = accumulate(.x = head(prob_surv, -1),
                                       .init = 100000,
-                                      .f = fun_alive_int),
+                                      .f = `*`),
            num_dying_int = case_when(row_number() == n() ~ num_alive_int,
                                      TRUE ~ num_alive_int - lead(num_alive_int)),
            pers_yrs_lived_int = case_when(row_number() == n() ~ num_alive_int/death_rate, 
