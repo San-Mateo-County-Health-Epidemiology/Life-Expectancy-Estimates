@@ -2,7 +2,6 @@
 ## row_number() == n() identifies the last row of a group and allows for different behavior for that row
 make_life_table <- function(data) {
   life_table <- data %>%
-    arrange(start_age) %>% 
     mutate(int_width = case_when(age_cat == "0" ~ 1,
                                  age_cat == "1-4" ~ 4,
                                  age_cat == "0-4" ~ 5, 
