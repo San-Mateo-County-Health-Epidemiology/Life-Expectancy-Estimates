@@ -10,7 +10,7 @@ library(tidyverse)
 
 # setup ----------------------------------------------
 ## load function ----
-source("R\\functions\\create_life_table_function.R")
+source("R\\functions\\make-life-table-function.R")
 
 ## load data -----
 data <- rio::import("data/example-data.csv")
