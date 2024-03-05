@@ -21,7 +21,8 @@ le <- data %>%
   mutate(start_age = as.numeric(str_extract(age_cat, "^\\d{1,2}"))) %>% # start age makes sure the age groups sort correctly
   group_by(year) %>% # you can add other grouping variables (race, sex, etc here)
   arrange(start_age) %>%
-  make_life_table() 
+  make_life_table() %>%
+  ungroup()
 
 ## pull out the life expectancy estimate ----
 le %>%

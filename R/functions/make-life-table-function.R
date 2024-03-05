@@ -35,9 +35,7 @@ make_life_table <- function(data) {
                                             .dir = "backward"),
            sample_var_obs_le = sample_var_pers_yrs/num_alive_int^2,
            ci_low_95 = round(obs_le_int-(1.96*sqrt(sample_var_obs_le)), 1),
-           ci_high_95 = round(obs_le_int+(1.96*sqrt(sample_var_obs_le)), 1)) %>%
-    ungroup()
-  
+           ci_high_95 = round(obs_le_int+(1.96*sqrt(sample_var_obs_le)), 1)) 
   
   life_table
   
